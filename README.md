@@ -1,27 +1,20 @@
 # Go Tools
 
-This subrepository holds the source for various packages and tools that support
-the Go programming language.
-
-Some of the tools, `godoc` and `vet` for example, are included in binary Go
-distributions.
-
-Others, including the Go `guru` and the test coverage tool, can be fetched with
-`go get`.
-
-Packages include a type-checker for Go and an implementation of the
-Static Single Assignment form (SSA) representation for Go programs.
+## Changes
+1. Organization defined in the ENV variable ORG is grouped separately.
+2. Ignore user defined empty lines between imports.
+3. If few packages are provided in `local`, the each group will be intended with new line.
 
 ## Download/Install
 
-The easiest way to install is to run `go get -u golang.org/x/tools/...`. You can
-also manually git clone the repository to `$GOPATH/src/golang.org/x/tools`.
+```bash
+$ git clone https://github.com/stishenok/tools.git
+$ cd tools/cmd/goimports
+$ go install
 
-## Report Issues / Send Patches
+$ export ORG=github.com/karhoo
+(add in ~/.bash_profile or ~/.zshrc)
 
-This repository uses Gerrit for code changes. To learn how to submit changes to
-this repository, see https://golang.org/doc/contribute.html.
-
-The main issue tracker for the tools repository is located at
-https://github.com/golang/go/issues. Prefix your issue with "x/tools/(your
-subdir):" in the subject line, so it is easy to find.
+$ goimports -w -local=github.com/karhoo/svc-money .
+local - current package (repository)
+```
