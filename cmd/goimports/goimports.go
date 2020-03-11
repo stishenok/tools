@@ -51,6 +51,7 @@ var (
 			GO111MODULE: os.Getenv("GO111MODULE"),
 			GOPROXY:     os.Getenv("GOPROXY"),
 			GOSUMDB:     os.Getenv("GOSUMDB"),
+			ORG:         os.Getenv("ORG"),
 		},
 	}
 	exitCode = 0
