@@ -36,9 +36,12 @@ var importToGroup = []func(env *ProcessEnv, importPath string) (num int, ok bool
 		if env.LocalPrefix == "" {
 			return
 		}
-		for _, p := range strings.Split(env.LocalPrefix, ",") {
+		for i, p := range strings.Split(env.LocalPrefix, ",") {
 			if strings.HasPrefix(importPath, p) || strings.TrimSuffix(p, "/") == importPath {
-				return 3, true
+				return 3 + i, true
+			}
+			if env.ORG != "" && strings.HasPrefix(importPath, env.ORG) {
+				return 4 + i, true
 			}
 		}
 		return
@@ -51,7 +54,7 @@ var importToGroup = []func(env *ProcessEnv, importPath string) (num int, ok bool
 	},
 	func(_ *ProcessEnv, importPath string) (num int, ok bool) {
 		if strings.Contains(importPath, ".") {
-			return 1, true
+			return 999, true // ¯\_(ツ)_/¯
 		}
 		return
 	},
@@ -751,8 +754,8 @@ type ProcessEnv struct {
 
 	// If non-empty, these will be used instead of the
 	// process-wide values.
-	GOPATH, GOROOT, GO111MODULE, GOPROXY, GOFLAGS, GOSUMDB string
-	WorkingDir                                             string
+	GOPATH, GOROOT, GO111MODULE, GOPROXY, GOFLAGS, GOSUMDB, ORG string
+	WorkingDir                                                  string
 
 	// If Logf is non-nil, debug logging is enabled through this function.
 	Logf func(format string, args ...interface{})
